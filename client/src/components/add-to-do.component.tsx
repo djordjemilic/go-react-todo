@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { useForm } from "@mantine/form";
 import { Modal, Button, Group, TextInput, Textarea } from "@mantine/core";
-import { ENDPOINT } from "../App";
+import { ENDPOINT, Todo } from "../App";
+import { KeyedMutator } from "swr";
 
-function AddToDo() {
+function AddToDo({ mutate }: { mutate: KeyedMutator<Todo[]> }) {
   const [open, setOpen] = useState(false);
 
   const form = useForm({
@@ -19,10 +20,10 @@ function AddToDo() {
       headers: {
         "Content-Type": "application/json",
       },
-
       body: JSON.stringify(values),
     }).then((res) => res.json());
 
+    mutate(updated);
     form.reset();
     setOpen(false);
   }
