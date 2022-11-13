@@ -5,6 +5,7 @@ import (
 	"log"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 )
 
 
@@ -19,6 +20,10 @@ func main() {
 	fmt.Print("Hello World!")
 
 	app := fiber.New()
+	app.Use(cors.New(cors.Config{
+		AllowOrigins: "http://127.0.0.1:5173",
+		AllowHeaders: "Origin, Content-Type, Accept",
+	}))
 
 	todos := []Todo{}
 
@@ -47,6 +52,19 @@ func main() {
 		if err != nil {
 			return c.Status(401).SendString("Invalid id")
 		}
+
+		for i, t := range todos {
+			if t.ID == id {
+				todos[i].Done = true
+				break
+			}
+		}
+
+		return c.JSON(todos)
+	})
+
+	app.Get("/api/todos", func(c *fiber.Ctx) error {
+		return c.JSON(todos)
 	})
 
 	log.Fatal(app.Listen(":4000"))
