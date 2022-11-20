@@ -1,7 +1,7 @@
 <!-- ABOUT THE PROJECT -->
 ## ToDo app with Go & React
 
-Since I'm learning Go programming language, I've decided to make this simple ToDo app in order to practice Go, as well to improve my skills with Typescript and React.
+Since I'm learning Go programming language, I've decided to make this simple ToDo app in order to practice Go, as well as to improve my skills with Typescript and React.
 
 
 
